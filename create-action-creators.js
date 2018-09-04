@@ -1,4 +1,4 @@
-const { actionTypeCreator } = require("./action-type-creator");
+const actionTypeCreator = require("./action-type-creator");
 
 function createActionCreators(stateSliceName, fns) {
   const createActionName = actionTypeCreator(stateSliceName);
@@ -15,4 +15,4 @@ function createActionCreators(stateSliceName, fns) {
   return actions;
 }
 
-module.exports = { createActionCreators };
+module.exports = createActionCreators;

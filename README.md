@@ -92,9 +92,9 @@ const initialState = {
   user: null
 };
 
-const { reducer, ...actionTypes } = createReducer("session", fns, initialState);
+const reducer = createReducer("session", fns, initialState);
 
-module.exports = { actionTypes, actions, reducer, selectors };
+module.exports = { actions, reducer, selectors };
 ```
 
 ### app/index.js
@@ -189,9 +189,9 @@ const { initialState } = require("./initial-state");
 const fns = require("./reducer");
 const selectors = require("./selectors");
 
-const { reducer, ...actionTypes } = createLazyReducer("session", fns, initialState);
+const reducer = createLazyReducer("session", fns, initialState);
 
-module.exports = { reducer, actionTypes, actions, selectors };
+module.exports = { reducer, actions, selectors };
 ```
 
 ### app-lazy/state/initial-state.js
@@ -210,7 +210,7 @@ module.exports = { session };
 const { h } = require("preact");
 const { Provider } = require("preact-redux");
 const { applyMiddleware, compose } = require("redux");
-const { createLazyStore } = require("../");
+const { createLazyStore } = require("@lecstor/redux-helpers");
 const thunk = require("redux-thunk");
 
 const App = require("./app");

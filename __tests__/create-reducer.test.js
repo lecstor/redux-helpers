@@ -1,4 +1,4 @@
-const { createReducer } = require("../create-reducer");
+const createReducer = require("../create-reducer");
 
 const reducerFns = {
   setUser(state, { payload: user }) {
@@ -11,15 +11,14 @@ const reducerFns = {
 
 describe("createReducer", () => {
   test("create reducer", () => {
-    const { reducer, ...actionTypes } = createReducer("session", reducerFns, {
+    const reducer = createReducer("session", reducerFns, {
       id: "abc123"
     });
-    expect(actionTypes.SET_USER).toEqual("app/session/setUser");
     expect(reducer).toBeInstanceOf(Function);
     expect(
       reducer(
         {},
-        { type: actionTypes.SET_USER, payload: { id: "testSetUser" } }
+        { type: "app/session/setUser", payload: { id: "testSetUser" } }
       )
     ).toEqual({
       user: { id: "testSetUser" }

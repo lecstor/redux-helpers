@@ -10,4 +10,4 @@ function createSliceReducer(reducerFunctions, initialState) {
   };
 }
 
-module.exports = { createSliceReducer };
+module.exports = createSliceReducer;

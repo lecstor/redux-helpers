@@ -1,4 +1,4 @@
-const { actionTypeCreator } = require("../action-type-creator");
+const actionTypeCreator = require("../action-type-creator");
 
 describe("actionTypeCreator", () => {
   test("create action type creator", () => {

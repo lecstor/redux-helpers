@@ -1,4 +1,4 @@
-const { createActionCreators } = require("../create-action-creators");
+const createActionCreators = require("../create-action-creators");
 
 const reducer = {
   setUser(state, { payload: user }) {

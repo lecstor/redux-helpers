@@ -1,13 +1,13 @@
 const { combineReducers, createStore: reduxCreateStore } = require("redux");
 
-const { reducerRegistry } = require("./reducer-registry");
+const reducerRegistry = require("./reducer-registry");
 
 // Preserve initial state for not-yet-loaded reducers
 const combine = (reducers, initialState) => {
   const reducerNames = Object.keys(reducers);
   Object.keys(initialState).forEach(item => {
     if (reducerNames.indexOf(item) === -1) {
-      reducers[item] = (state = initialState[item]) => state;
+      reducers[item] = (state = initialState[item]) => state || null;
     }
   });
   return combineReducers(reducers);
@@ -22,7 +22,7 @@ const combine = (reducers, initialState) => {
  * @example
  * import { applyMiddleware, compose } from "redux";
  * import { Provider } from "preact-redux";
- * import { createStore } from "@lecstor/redux-helpers/create-store"
+ * import { createStore } from "@lecstor/redux-helpers"
  * import thunk from "redux-thunk";
  *
  * import "./state/session";
@@ -55,4 +55,4 @@ function createLazyStore(initialState, enhancers) {
   return store;
 }
 
-module.exports = { createLazyStore };
+module.exports = createLazyStore;

@@ -1,4 +1,4 @@
-const { createLazyReducer } = require("../create-lazy-reducer");
+const createLazyReducer = require("../create-lazy-reducer");
 
 const reducerFns = {
   setUser(state, { payload: user }) {
@@ -11,19 +11,14 @@ const reducerFns = {
 
 describe("createLazyReducer", () => {
   test("create reducer", () => {
-    const { reducer, ...actionTypes } = createLazyReducer(
-      "session",
-      reducerFns,
-      {
-        id: "abc123"
-      }
-    );
-    expect(actionTypes.SET_USER).toEqual("app/session/setUser");
+    const reducer = createLazyReducer("session", reducerFns, {
+      id: "abc123"
+    });
     expect(reducer).toBeInstanceOf(Function);
     expect(
       reducer(
         {},
-        { type: actionTypes.SET_USER, payload: { id: "testSetUser" } }
+        { type: "app/session/setUser", payload: { id: "testSetUser" } }
       )
     ).toEqual({
       user: { id: "testSetUser" }

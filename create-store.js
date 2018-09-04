@@ -10,7 +10,7 @@ const { combineReducers, createStore: reduxCreateStore } = require("redux");
  * @example
  * import { applyMiddleware, compose } from "redux";
  * import { Provider } from "preact-redux";
- * import { createStore } from "@lecstor/redux-helpers/create-store"
+ * import { createStore } from "@lecstor/redux-helpers"
  * import thunk from "redux-thunk";
  *
  * import { reducer as session } from "./state/session";
@@ -42,4 +42,4 @@ function createStore(reducers, state, enhancers) {
   return store;
 }
 
-module.exports = { createStore };
+module.exports = createStore;

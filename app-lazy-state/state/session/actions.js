@@ -10,4 +10,4 @@ actions.logIn = () => dispatch => {
   );
 };
 
-module.exports = { actions };
+module.exports = actions;

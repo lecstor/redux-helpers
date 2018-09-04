@@ -1,4 +1,4 @@
-const { createSliceReducer } = require("../create-slice-reducer");
+const createSliceReducer = require("../create-slice-reducer");
 
 const reducerFns = {
   setUser(state, { payload: user }) {

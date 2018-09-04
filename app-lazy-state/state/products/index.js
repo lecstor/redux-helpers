@@ -1,14 +1,10 @@
 const { createLazyReducer } = require("../../../");
 
-const { actions } = require("./actions");
+const actions = require("./actions");
 const initialState = require("./initial-state");
 const fns = require("./reducer");
 const selectors = require("./selectors");
 
-const { reducer, ...actionTypes } = createLazyReducer(
-  "products",
-  fns,
-  initialState
-);
+const reducer = createLazyReducer("products", fns, initialState);
 
-module.exports = { reducer, actionTypes, actions, selectors };
+module.exports = { ...actions, reducer, selectors };

@@ -1,8 +1,8 @@
-const { actions } = require("./actions");
+const { setProduct } = require("./actions");
 
 describe("actions", () => {
   test("setProduct", () => {
-    expect(actions.setProduct({ id: "abc123" })).toEqual({
+    expect(setProduct({ id: "abc123" })).toEqual({
       type: "app/products/setProduct",
       payload: { id: "abc123" }
     });

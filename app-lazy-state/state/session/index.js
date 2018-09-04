@@ -1,14 +1,11 @@
-const { createLazyReducer } = require("../../../");
+const { createLazyReducer, createActionTypes } = require("../../../");
 
-const { actions } = require("./actions");
+const actions = require("./actions");
 const initialState = require("./initial-state");
 const fns = require("./reducer");
 const selectors = require("./selectors");
 
-const { reducer, ...actionTypes } = createLazyReducer(
-  "session",
-  fns,
-  initialState
-);
+const reducer = createLazyReducer("session", fns, initialState);
+const actionTypes = createActionTypes("session", fns);
 
-module.exports = { reducer, actionTypes, actions, selectors };
+module.exports = { ...actions, ...actionTypes, reducer, selectors };
