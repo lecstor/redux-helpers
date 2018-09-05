@@ -11,14 +11,13 @@ const reducerFns = {
 
 describe("createSliceReducer", () => {
   test("create slice reducer", () => {
-    const reducer = createSliceReducer(reducerFns, {
-      id: "abc123"
-    });
+    const reducer = createSliceReducer(reducerFns, { user: { id: "abc123" } });
     expect(reducer).toBeInstanceOf(Function);
     expect(
       reducer({}, { type: "setUser", payload: { id: "testSetUser" } })
-    ).toEqual({
-      user: { id: "testSetUser" }
-    });
+    ).toEqual({ user: { id: "testSetUser" } });
+    expect(
+      reducer(null, { type: "setUser", payload: { id: "testSetUser" } })
+    ).toEqual({ user: { id: "abc123" } });
   });
 });

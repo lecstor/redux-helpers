@@ -10,4 +10,4 @@ const initialState = {
 
 const reducer = createReducer("session", fns, initialState);
 
-module.exports = { ...actions, reducer, selectors };
+module.exports = { ...actions, reducer, ...selectors };

@@ -18,5 +18,10 @@ describe("createActionCreators", () => {
       payload: { id: "abc123" },
       type: "app/session/setUser"
     });
+    expect(actionCreators.setUser(new Error("Boom"))).toEqual({
+      payload: new Error("Boom"),
+      type: "app/session/setUser",
+      error: true
+    });
   });
 });

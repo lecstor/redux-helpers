@@ -1,8 +1,7 @@
 const { h, Component } = require("preact");
 const { connect } = require("preact-redux");
 
-const { logIn } = require("./state/session");
-const { getFirstname } = require("./state/session/selectors");
+const { logIn, getFirstname } = require("./state/session");
 
 const mapStateToProps = state => {
   return { firstname: getFirstname(state) };
