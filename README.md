@@ -58,7 +58,7 @@ actions.logIn = () => dispatch => {
   );
 };
 
-module.exports = { actions };
+module.exports = actions;
 ```
 
 ### app/state/session/selectors.js
@@ -84,7 +84,7 @@ Export all the things.
 ```
 const { createReducer } = require("@lecstor/redux-helpers");
 
-const { actions } = require("./actions");
+const actions = require("./actions");
 const fns = require("./reducer");
 const selectors = require("./selectors");
 
@@ -94,7 +94,7 @@ const initialState = {
 
 const reducer = createReducer("session", fns, initialState);
 
-module.exports = { actions, reducer, selectors };
+module.exports = { reducer, ...actions, ...selectors };
 ```
 
 ### app/index.js
@@ -132,9 +132,7 @@ module.exports = AppContainer;
 const { h, Component } = require("preact");
 const { connect } = require("preact-redux");
 
-const { actions, selectors } = require("./state/session");
-const { logIn } = actions;
-const { getFirstname } = selectors;
+const { logIn, getFirstname } = require("./state/session");
 
 const mapStateToProps = state => {
   return { firstname: getFirstname(state) };
@@ -184,22 +182,22 @@ The only change is to import the initial state rather than declaring it here.
 ```
 const { createLazyReducer } = require("@lecstor/redux-helpers");
 
-const { actions } = require("./actions");
-const { initialState } = require("./initial-state");
+const actions = require("./actions");
+const initialState = require("./initial-state");
 const fns = require("./reducer");
 const selectors = require("./selectors");
 
 const reducer = createLazyReducer("session", fns, initialState);
 
-module.exports = { reducer, actions, selectors };
+module.exports = { reducer, ...actions, ...selectors };
 ```
 
 ### app-lazy/state/initial-state.js
 
-Export initial state for **all** store slices
+Import and Export initial state for **all** store slices
 
 ```
-const { initialState: session } = require("./session");
+const session = require("./session/initial-state");
 
 module.exports = { session };
 ```
