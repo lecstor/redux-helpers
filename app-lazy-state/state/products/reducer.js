@@ -1,7 +1,10 @@
 function setProduct(state, { payload: product }) {
   return {
     ...state,
-    [product.id]: product
+    collection: {
+      ...state.collection,
+      [product.id]: product
+    }
   };
 }
 

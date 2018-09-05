@@ -8,4 +8,4 @@ const selectors = require("./selectors");
 const reducer = createLazyReducer("session", fns, initialState);
 const actionTypes = createActionTypes("session", fns);
 
-module.exports = { ...actions, ...actionTypes, reducer, selectors };
+module.exports = { ...actions, ...actionTypes, reducer, ...selectors };

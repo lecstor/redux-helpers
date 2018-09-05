@@ -7,4 +7,4 @@ const selectors = require("./selectors");
 
 const reducer = createLazyReducer("products", fns, initialState);
 
-module.exports = { ...actions, reducer, selectors };
+module.exports = { ...actions, reducer, ...selectors };
