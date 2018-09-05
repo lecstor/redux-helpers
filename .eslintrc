@@ -42,6 +42,7 @@
       {
         "ignore": ["class"]
       }
-    ]
+    ],
+    "react/no-deprecated": 0
   }
 }
