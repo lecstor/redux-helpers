@@ -1,3 +1,7 @@
+/*
+ * http://nicolasgallagher.com/redux-modules-and-code-splitting/
+ * https://stackoverflow.com/questions/32968016/how-to-dynamically-load-reducers-for-code-splitting-in-a-redux-application
+ */
 class ReducerRegistry {
   constructor() {
     this._emitChange = null;
