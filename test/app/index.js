@@ -20,4 +20,4 @@ const store = createStore(
 
 const AppContainer = () => h(Provider, { store }, h(App));
 
-module.exports = AppContainer;
+export default AppContainer;

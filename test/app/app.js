@@ -23,4 +23,4 @@ const connected = connect(
   mapActionsToProps
 );
 
-module.exports = connected(App);
+export default connected(App);

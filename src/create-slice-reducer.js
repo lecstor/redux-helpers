@@ -1,12 +1,12 @@
 function createSliceReducer(reducerFunctions, initialState) {
-  return function reducer(state = initialState, actionMeta) {
+  return function reducer(state = initialState, action) {
     if (state === null) {
       return initialState;
     }
-    if (!(actionMeta && reducerFunctions[actionMeta.type])) {
+    if (!(action && reducerFunctions[action.type])) {
       return state;
     }
-    return reducerFunctions[actionMeta.type](state, actionMeta);
+    return reducerFunctions[action.type](state, action);
   };
 }
 
