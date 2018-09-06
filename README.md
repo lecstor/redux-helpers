@@ -45,9 +45,9 @@ export { setUser };
 Create default action creators automatically then add more complex ones manually.
 
 ```
-import { createActionCreators } from "@lecstor/redux-helpers");
+import { createActionCreators } from "@lecstor/redux-helpers";
 
-import * as fns from "./reducer");
+import * as fns from "./reducer";
 
 const actions = createActionCreators("session", fns);
 
@@ -78,11 +78,11 @@ Import reducer functions and wrap them into a reducer for the state slice.
 Export all the things.
 
 ```
-import { createReducer } from "@lecstor/redux-helpers");
+import { createReducer } from "@lecstor/redux-helpers";
 
-import actions from "./actions");
-import * as fns from "./reducer");
-import * as selectors from "./selectors");
+import actions from "./actions";
+import * as fns from "./reducer";
+import * as selectors from "./selectors";
 
 const initialState = {
   user: null
@@ -97,15 +97,15 @@ export { actions, actionTypes, reducer, selectors };
 ### app/index.js
 
 ```
-import { h } from "preact");
-import { Provider } from "preact-redux");
-import { applyMiddleware, compose } from "redux");
-import { createStore } from "@lecstor/redux-helpers");
-import thunk from "redux-thunk");
+import { h } from "preact";
+import { Provider } from "preact-redux";
+import { applyMiddleware, compose } from "redux";
+import { createStore } from "@lecstor/redux-helpers";
+import thunk from "redux-thunk";
 
-import App from "./app");
+import App from "./app";
 
-import { reducer as session } from "./state/session");
+import { reducer as session } from "./state/session";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -125,8 +125,8 @@ export default AppContainer;
 ### app/app.js
 
 ```
-import { h, Component } from "preact");
-import { connect } from "preact-redux");
+import { h, Component } from "preact";
+import { connect } from "preact-redux";
 
 import { actions, selectors } from "./state/session";
 
