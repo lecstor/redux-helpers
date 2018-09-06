@@ -1,5 +1,5 @@
-const actionTypeCreator = require("./action-type-creator");
-const createSliceReducer = require("./create-slice-reducer");
+import actionTypeCreator from "./action-type-creator";
+import createSliceReducer from "./create-slice-reducer";
 
 function createReducer(name, fns, initialState) {
   const createActionType = actionTypeCreator(name);
@@ -12,4 +12,4 @@ function createReducer(name, fns, initialState) {
   return reducer;
 }
 
-module.exports = createReducer;
+export default createReducer;

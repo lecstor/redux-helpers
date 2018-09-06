@@ -1,12 +1,12 @@
-const { h, Component } = require("preact");
-const { connect } = require("preact-redux");
+import { h, Component } from "preact";
+import { connect } from "preact-redux";
 
-const { logIn, getFirstname } = require("./state/session");
+import { actions, selectors } from "./state/session";
 
 const mapStateToProps = state => {
-  return { firstname: getFirstname(state) };
+  return { firstname: selectors.getFirstname(state) };
 };
-const mapActionsToProps = { logIn };
+const mapActionsToProps = { logIn: actions.logIn };
 
 class App extends Component {
   componentDidMount() {

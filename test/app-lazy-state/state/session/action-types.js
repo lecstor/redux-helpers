@@ -1,5 +1,5 @@
-const { createActionTypes } = require("../../../src");
+import { createActionTypes } from "../../../src";
 
-const fns = require("./reducer");
+import * as fns from "./reducer";
 
 module.exports = createActionTypes("session", fns);

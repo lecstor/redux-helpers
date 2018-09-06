@@ -1,14 +1,12 @@
-const { h, Component } = require("preact");
-const { connect } = require("preact-redux");
+import { h, Component } from "preact";
+import { connect } from "preact-redux";
 
-let UseLazySlice;
-
-const { logIn, getFirstname } = require("./state/session");
+import { actions, selectors } from "./state/session";
 
 const mapStateToProps = state => {
-  return { firstname: getFirstname(state) };
+  return { firstname: selectors.getFirstname(state) };
 };
-const mapActionsToProps = { logIn };
+const mapActionsToProps = { logIn: actions.logIn };
 
 class App extends Component {
   componentDidMount() {
@@ -16,14 +14,17 @@ class App extends Component {
   }
 
   componentWillUpdate() {
-    UseLazySlice = require("./use-lazy-slice");
+    // import("./use-lazy-slice").then(slice => {
+    //   this.UseLazySlice = slice;
+    // });
+    this.UseLazySlice = require("./use-lazy-slice").default;
   }
 
   render({ firstname }) {
-    if (UseLazySlice) {
+    if (this.UseLazySlice) {
       return h("div", null, [
         h("div", { id: "child1" }, `Hello ${firstname}`),
-        h(UseLazySlice, null)
+        h(this.UseLazySlice, null)
       ]);
     }
     return h(
@@ -39,4 +40,4 @@ const connected = connect(
   mapActionsToProps
 );
 
-module.exports = connected(App);
+export default connected(App);

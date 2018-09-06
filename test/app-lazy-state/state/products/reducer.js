@@ -8,4 +8,4 @@ function setProduct(state, { payload: product }) {
   };
 }
 
-module.exports = { setProduct };
+export { setProduct };

@@ -1,6 +1,6 @@
-const createLazyStore = require("../src/create-lazy-store");
+import createLazyStore from "../src/create-lazy-store";
 
-const { logIn } = require("../test/app-lazy-state/state/session");
+import { actions } from "../test/app-lazy-state/state/session";
 
 const initialState = {};
 
@@ -21,10 +21,12 @@ describe("store", () => {
   });
   test("logIn", () => {
     const { dispatch, getState } = newStore();
-    return logIn()(dispatch, getState).then(() => {
-      expect(getState()).toEqual({
-        session: { user: { firstname: "Fred", id: "abc123" } }
+    return actions
+      .logIn()(dispatch, getState)
+      .then(() => {
+        expect(getState()).toEqual({
+          session: { user: { firstname: "Fred", id: "abc123" } }
+        });
       });
-    });
   });
 });

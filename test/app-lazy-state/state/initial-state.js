@@ -1,4 +1,4 @@
-const session = require("./session/initial-state");
-const products = require("./products/initial-state");
+import session from "./session/initial-state";
+import products from "./products/initial-state";
 
-module.exports = { session, products };
+export default { session, products };

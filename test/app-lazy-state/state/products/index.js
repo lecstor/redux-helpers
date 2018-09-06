@@ -1,10 +1,10 @@
-const { createLazyReducer } = require("../../../../src");
+import { createLazyReducer } from "../../../../src";
 
-const actions = require("./actions");
-const initialState = require("./initial-state");
-const fns = require("./reducer");
-const selectors = require("./selectors");
+import actions from "./actions";
+import initialState from "./initial-state";
+import * as fns from "./reducer";
+import * as selectors from "./selectors";
 
 const reducer = createLazyReducer("products", fns, initialState);
 
-module.exports = { ...actions, reducer, ...selectors };
+export { actions, reducer, selectors };

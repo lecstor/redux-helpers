@@ -5,4 +5,4 @@ function setUser(state, { payload: user }) {
   };
 }
 
-module.exports = { setUser };
+export { setUser };

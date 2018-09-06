@@ -1,5 +1,3 @@
-const initialState = {
+export default {
   user: null
 };
-
-module.exports = initialState;

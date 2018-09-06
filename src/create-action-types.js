@@ -1,5 +1,5 @@
-const actionTypeCreator = require("./action-type-creator");
-const fnNameToActionName = require("./fn-name-to-action-name");
+import actionTypeCreator from "./action-type-creator";
+import fnNameToActionName from "./fn-name-to-action-name";
 
 function createActionTypes(name, fns) {
   const createActionType = actionTypeCreator(name);
@@ -12,4 +12,4 @@ function createActionTypes(name, fns) {
   return actionTypes;
 }
 
-module.exports = createActionTypes;
+export default createActionTypes;

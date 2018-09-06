@@ -1,4 +1,4 @@
-const { combineReducers, createStore: reduxCreateStore } = require("redux");
+import { combineReducers, createStore as reduxCreateStore } from "redux";
 
 /**
  * returns a store
@@ -42,4 +42,4 @@ function createStore(reducers, state, enhancers) {
   return store;
 }
 
-module.exports = createStore;
+export default createStore;

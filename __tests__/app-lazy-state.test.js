@@ -1,5 +1,5 @@
-const { AppContainer, store } = require("../test/app-lazy-state");
-const { render } = require("preact-render-spy");
+import { AppContainer, store } from "../test/app-lazy-state";
+import { render } from "preact-render-spy";
 
 describe("Lazy App", () => {
   test("Lazy AppContainer renders", () => {

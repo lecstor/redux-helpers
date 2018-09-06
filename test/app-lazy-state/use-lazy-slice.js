@@ -1,12 +1,12 @@
-const { h, Component } = require("preact");
-const { connect } = require("preact-redux");
+import { h, Component } from "preact";
+import { connect } from "preact-redux";
 
-const { getProduct, setProduct } = require("./state/products");
+import { actions, selectors } from "./state/products";
 
 const mapStateToProps = state => {
-  return { product: getProduct(state, "1") };
+  return { product: selectors.getProduct(state, "1") };
 };
-const mapActionsToProps = { setProduct };
+const mapActionsToProps = { setProduct: actions.setProduct };
 
 class UseLazySlice extends Component {
   componentDidMount() {
@@ -23,4 +23,4 @@ const connected = connect(
   mapActionsToProps
 );
 
-module.exports = connected(UseLazySlice);
+export default connected(UseLazySlice);

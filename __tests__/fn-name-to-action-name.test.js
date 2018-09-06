@@ -1,4 +1,4 @@
-const fnNameToActionName = require("../src/fn-name-to-action-name");
+import fnNameToActionName from "../src/fn-name-to-action-name";
 
 describe("fnNameToActionName", () => {
   test("one word", () => {

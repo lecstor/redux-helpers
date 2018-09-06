@@ -1,4 +1,4 @@
-const createActionCreators = require("../src/create-action-creators");
+import createActionCreators from "../src/create-action-creators";
 
 const reducer = {
   setUser(state, { payload: user }) {

@@ -1,5 +1,5 @@
-const { createActionCreators } = require("../../../../src");
+import { createActionCreators } from "../../../../src";
 
-const fns = require("./reducer");
+import * as fns from "./reducer";
 
-module.exports = createActionCreators("products", fns);
+export default createActionCreators("products", fns);

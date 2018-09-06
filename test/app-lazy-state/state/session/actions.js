@@ -1,6 +1,6 @@
-const { createActionCreators } = require("../../../../src");
+import { createActionCreators } from "../../../../src";
 
-const fns = require("./reducer");
+import * as fns from "./reducer";
 
 const actions = createActionCreators("session", fns);
 
@@ -10,4 +10,4 @@ actions.logIn = () => dispatch => {
   );
 };
 
-module.exports = actions;
+export default actions;

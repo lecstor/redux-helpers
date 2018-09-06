@@ -1,14 +1,14 @@
-const { h } = require("preact");
-const { Provider } = require("preact-redux");
-const { applyMiddleware, compose } = require("redux");
-const { createLazyStore } = require("../../src/index");
-const thunk = require("redux-thunk");
+import { h } from "preact";
+import { Provider } from "preact-redux";
+import { applyMiddleware, compose } from "redux";
+import { createLazyStore } from "../../src/index";
+import thunk from "redux-thunk";
 
-const App = require("./app");
+import App from "./app";
 
-const initialState = require("./state/initial-state");
+import initialState from "./state/initial-state";
 
-require("./state/session");
+import "./state/session";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -17,9 +17,9 @@ const composeEnhancers =
 
 const store = createLazyStore(
   initialState,
-  composeEnhancers(applyMiddleware(thunk.default))
+  composeEnhancers(applyMiddleware(thunk))
 );
 
 const AppContainer = () => h(Provider, { store }, h(App));
 
-module.exports = { AppContainer, store };
+export { AppContainer, store };

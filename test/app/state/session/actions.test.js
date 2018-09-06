@@ -1,4 +1,6 @@
-const { logIn, setUser } = require("./actions");
+import actions from "./actions";
+
+const { logIn, setUser } = actions;
 
 describe("actions", () => {
   test("setUser", () => {

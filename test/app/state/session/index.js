@@ -1,8 +1,8 @@
-const { createReducer } = require("../../../../src");
+import { createReducer } from "../../../../src";
 
-const actions = require("./actions");
-const fns = require("./reducer");
-const selectors = require("./selectors");
+import actions from "./actions";
+import * as fns from "./reducer";
+import * as selectors from "./selectors";
 
 const initialState = {
   user: null
@@ -10,4 +10,4 @@ const initialState = {
 
 const reducer = createReducer("session", fns, initialState);
 
-module.exports = { ...actions, reducer, ...selectors };
+export { actions, reducer, selectors };

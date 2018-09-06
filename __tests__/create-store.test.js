@@ -1,6 +1,6 @@
-const { createStore } = require("../src/index");
+import { createStore } from "../src/index";
 
-const { logIn, reducer: session } = require("../test/app/state/session");
+import { actions, reducer as session } from "../test/app/state/session";
 
 const initialState = {};
 
@@ -14,10 +14,12 @@ function newStore(state = initialState) {
 describe("store", () => {
   test("logIn", () => {
     const { store, dispatch, getState } = newStore();
-    return logIn()(dispatch, getState).then(() => {
-      expect(store.getState()).toEqual({
-        session: { user: { firstname: "Fred", id: "abc123" } }
+    return actions
+      .logIn()(dispatch, getState)
+      .then(() => {
+        expect(store.getState()).toEqual({
+          session: { user: { firstname: "Fred", id: "abc123" } }
+        });
       });
-    });
   });
 });

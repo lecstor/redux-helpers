@@ -1,4 +1,4 @@
-const { setProduct } = require("./reducer");
+import { setProduct } from "./reducer";
 
 describe("reducer", () => {
   test("setProduct", () => {

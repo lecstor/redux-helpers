@@ -1,5 +1,5 @@
-const reducerRegistry = require("./reducer-registry");
-const createReducer = require("./create-reducer");
+import reducerRegistry from "./reducer-registry";
+import createReducer from "./create-reducer";
 
 function createLazyReducer(name, fns, initialState) {
   const reducer = createReducer(name, fns, initialState);
@@ -7,4 +7,4 @@ function createLazyReducer(name, fns, initialState) {
   return reducer;
 }
 
-module.exports = createLazyReducer;
+export default createLazyReducer;

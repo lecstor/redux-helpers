@@ -1,5 +1,3 @@
-const initialState = {
+export default {
   collection: {}
 };
-
-module.exports = initialState;

@@ -22,4 +22,4 @@ class ReducerRegistry {
 
 const reducerRegistry = new ReducerRegistry();
 
-module.exports = reducerRegistry;
+export default reducerRegistry;

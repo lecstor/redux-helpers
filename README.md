@@ -35,7 +35,7 @@ function setUser(state, { payload: user }) {
   return { ...state, user };
 }
 
-module.exports = { setUser };
+export { setUser };
 ```
 
 ### app/state/session/actions.js
@@ -43,10 +43,10 @@ module.exports = { setUser };
 Create default action creators automatically then add the special ones manually.
 
 ```
-const { createActionCreators } = require("@lecstor/redux-helpers");
+const { createActionCreators } from "@lecstor/redux-helpers");
 
 // import reducer functions
-const fns = require("./reducer");
+const fns from "./reducer");
 
 // create action creators for reducers with the same names
 const actions = createActionCreators("session", fns);
@@ -58,7 +58,7 @@ actions.logIn = () => dispatch => {
   );
 };
 
-module.exports = actions;
+export default actions;
 ```
 
 ### app/state/session/selectors.js
@@ -70,7 +70,7 @@ function getFirstname(state) {
   return state.session.user.firstname;
 }
 
-module.exports = { getFirstname };
+export { getFirstname };
 ```
 
 ### app/state/session/index.js
@@ -82,11 +82,11 @@ Export all the things.
 "external" reducers, (eg for logging)
 
 ```
-const { createReducer } = require("@lecstor/redux-helpers");
+const { createReducer } from "@lecstor/redux-helpers");
 
-const actions = require("./actions");
-const fns = require("./reducer");
-const selectors = require("./selectors");
+const actions from "./actions");
+const fns from "./reducer");
+const selectors from "./selectors");
 
 const initialState = {
   user: null
@@ -94,22 +94,22 @@ const initialState = {
 
 const reducer = createReducer("session", fns, initialState);
 
-module.exports = { reducer, ...actions, ...selectors };
+export { reducer, ...actions, ...selectors };
 ```
 
 ### app/index.js
 
 ```
-const { h } = require("preact");
-const { Provider } = require("preact-redux");
-const { applyMiddleware, compose } = require("redux");
-const { createStore } = require("@lecstor/redux-helpers");
-const thunk = require("redux-thunk");
+const { h } from "preact");
+const { Provider } from "preact-redux");
+const { applyMiddleware, compose } from "redux");
+const { createStore } from "@lecstor/redux-helpers");
+const thunk from "redux-thunk");
 
-const App = require("./app");
+const App from "./app");
 
 // import our state slice reducers
-const { reducer: session } = require("./state/session");
+const { reducer: session } from "./state/session");
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
@@ -129,10 +129,10 @@ module.exports = AppContainer;
 ### app/app.js
 
 ```
-const { h, Component } = require("preact");
-const { connect } = require("preact-redux");
+const { h, Component } from "preact");
+const { connect } from "preact-redux");
 
-const { logIn, getFirstname } = require("./state/session");
+const { logIn, getFirstname } from "./state/session");
 
 const mapStateToProps = state => {
   return { firstname: getFirstname(state) };
@@ -172,7 +172,7 @@ const initialState = {
   user: null
 };
 
-module.exports = { initialState };
+export { initialState };
 ```
 
 ### app-lazy/state/session/index.js
@@ -180,16 +180,16 @@ module.exports = { initialState };
 The only change is to import the initial state rather than declaring it here.
 
 ```
-const { createLazyReducer } = require("@lecstor/redux-helpers");
+const { createLazyReducer } from "@lecstor/redux-helpers");
 
-const actions = require("./actions");
-const initialState = require("./initial-state");
-const fns = require("./reducer");
-const selectors = require("./selectors");
+const actions from "./actions");
+const initialState from "./initial-state");
+const fns from "./reducer");
+const selectors from "./selectors");
 
 const reducer = createLazyReducer("session", fns, initialState);
 
-module.exports = { reducer, ...actions, ...selectors };
+export { reducer, ...actions, ...selectors };
 ```
 
 ### app-lazy/state/initial-state.js
@@ -197,24 +197,24 @@ module.exports = { reducer, ...actions, ...selectors };
 Import and Export initial state for **all** store slices
 
 ```
-const session = require("./session/initial-state");
+const session from "./session/initial-state");
 
-module.exports = { session };
+export { session };
 ```
 
 ### app-lazy/index.js
 
 ```
-const { h } = require("preact");
-const { Provider } = require("preact-redux");
-const { applyMiddleware, compose } = require("redux");
-const { createLazyStore } = require("@lecstor/redux-helpers");
-const thunk = require("redux-thunk");
+const { h } from "preact");
+const { Provider } from "preact-redux");
+const { applyMiddleware, compose } from "redux");
+const { createLazyStore } from "@lecstor/redux-helpers");
+const thunk from "redux-thunk");
 
-const App = require("./app");
+const App from "./app");
 
 // initialise the store state with all slices initial states
-const initialState = require("./state/initial-state");
+const initialState from "./state/initial-state");
 
 // import any slices we want loaded by default
 require("./state/session");

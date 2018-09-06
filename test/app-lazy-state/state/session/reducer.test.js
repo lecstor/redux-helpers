@@ -1,4 +1,4 @@
-const { setUser } = require("./reducer");
+import { setUser } from "./reducer";
 
 describe("reducer", () => {
   test("setUser", () => {

@@ -1,6 +1,6 @@
-const { combineReducers, createStore: reduxCreateStore } = require("redux");
+import { combineReducers, createStore as reduxCreateStore } from "redux";
 
-const reducerRegistry = require("./reducer-registry");
+import reducerRegistry from "./reducer-registry";
 
 // Preserve initial state for not-yet-loaded reducers
 const combine = (reducers, initialState) => {
@@ -55,4 +55,4 @@ function createLazyStore(initialState, enhancers) {
   return store;
 }
 
-module.exports = createLazyStore;
+export default createLazyStore;

@@ -1,6 +1,5 @@
-// const { h } = require("preact");
-const AppContainer = require("../test/app");
-const { render } = require("preact-render-spy");
+import AppContainer from "../test/app";
+import { render } from "preact-render-spy";
 
 describe("App", () => {
   test("AppContainer renders", () => {
