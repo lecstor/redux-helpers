@@ -5,9 +5,11 @@ function createActionTypes(name, fns) {
   const createActionType = actionTypeCreator(name);
   const actionTypes = {};
   for (const fnName in fns) {
-    const actionType = createActionType(fnName); // "app/session/setUser"
-    const actionName = fnNameToActionName(fnName); // "SET_USER"
-    actionTypes[actionName] = actionType;
+    if (fns[fnName] instanceof Function) {
+      const actionType = createActionType(fnName); // "app/session/setUser"
+      const actionName = fnNameToActionName(fnName); // "SET_USER"
+      actionTypes[actionName] = actionType;
+    }
   }
   return actionTypes;
 }
