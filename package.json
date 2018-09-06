@@ -1,7 +1,7 @@
 {
   "name": "@lecstor/redux-helpers",
   "version": "0.0.1",
-  "description": "Boilerplate reduction and lazy slice loading",
+  "description": "Redux boilerplate reduction and lazy loading of store slices",
   "author": "Jason Galea <jason@lecstor.com> (http://lecstor.com)",
   "license": "MIT",
   "main": "./lib/index.js",
@@ -14,6 +14,11 @@
     "prepare": "yarn clean && yarn build",
     "test": "jest"
   },
+  "keywords": [
+    "redux"
+  ],
+  "repository": "github:lecstor/redux-helpers",
+  "bugs": "https://github.com/lecstor/redux-helpers/issues",
   "files": [
     "es",
     "lib",
@@ -73,6 +78,6 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "peerDependencies": {
-    "redux": "^4.0"
+    "redux": "^3.0 || ^4.0"
   }
 }
