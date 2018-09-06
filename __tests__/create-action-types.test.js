@@ -1,4 +1,4 @@
-const createActionTypes = require("../create-action-types");
+const createActionTypes = require("../src/create-action-types");
 
 const reducerFns = {
   setUser(state, { payload: user }) {

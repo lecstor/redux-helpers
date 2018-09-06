@@ -1,4 +1,4 @@
-const createLazyReducer = require("../create-lazy-reducer");
+const createLazyReducer = require("../src/create-lazy-reducer");
 
 const reducerFns = {
   setUser(state, { payload: user }) {

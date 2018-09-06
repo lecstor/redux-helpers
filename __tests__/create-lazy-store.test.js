@@ -1,6 +1,6 @@
-const createLazyStore = require("../create-lazy-store");
+const createLazyStore = require("../src/create-lazy-store");
 
-const { logIn } = require("../app-lazy-state/state/session");
+const { logIn } = require("../test/app-lazy-state/state/session");
 
 const initialState = {};
 

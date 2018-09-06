@@ -1,4 +1,4 @@
-const { createActionCreators } = require("../../../");
+const { createActionCreators } = require("../../../../src");
 
 const fns = require("./reducer");
 

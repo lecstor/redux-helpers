@@ -1,6 +1,6 @@
-const { createStore } = require("../index");
+const { createStore } = require("../src/index");
 
-const { logIn, reducer: session } = require("../app/state/session");
+const { logIn, reducer: session } = require("../test/app/state/session");
 
 const initialState = {};
 

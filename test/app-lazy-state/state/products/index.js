@@ -1,4 +1,4 @@
-const { createLazyReducer } = require("../../../");
+const { createLazyReducer } = require("../../../../src");
 
 const actions = require("./actions");
 const initialState = require("./initial-state");

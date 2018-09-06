@@ -1,5 +1,5 @@
 // const { h } = require("preact");
-const AppContainer = require("../app");
+const AppContainer = require("../test/app");
 const { render } = require("preact-render-spy");
 
 describe("App", () => {

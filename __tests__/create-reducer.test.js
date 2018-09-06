@@ -1,4 +1,4 @@
-const createReducer = require("../create-reducer");
+const createReducer = require("../src/create-reducer");
 
 const reducerFns = {
   setUser(state, { payload: user }) {

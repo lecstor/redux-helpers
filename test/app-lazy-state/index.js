@@ -1,7 +1,7 @@
 const { h } = require("preact");
 const { Provider } = require("preact-redux");
 const { applyMiddleware, compose } = require("redux");
-const { createLazyStore } = require("../index");
+const { createLazyStore } = require("../../src/index");
 const thunk = require("redux-thunk");
 
 const App = require("./app");
