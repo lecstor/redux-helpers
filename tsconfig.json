@@ -6,7 +6,8 @@
     "module": "ES2015",
     "declaration": true,
     "strict": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "esModuleInterop": true
   },
   "include": ["src", "test"]
 }
