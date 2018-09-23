@@ -1,5 +1,7 @@
-function getProduct(state, id) {
-  return state.products.collection[id];
+import { SliceState } from "./types";
+
+function getProduct(state: SliceState, id: string) {
+  return state.collection[id];
 }
 
 export { getProduct };

@@ -1,16 +1,21 @@
-import { combineReducers, createStore as reduxCreateStore } from "redux";
+import {
+  combineReducers,
+  createStore as reduxCreateStore,
+  StoreEnhancer
+} from "redux";
 
 import reducerRegistry from "./reducer-registry";
+import { InitialState, ReducersMapObject, StdAction } from "./types";
 
 // Preserve initial state for not-yet-loaded reducers
-const combine = (reducers, initialState) => {
+const combine = (reducers: ReducersMapObject, initialState: InitialState) => {
   const reducerNames = Object.keys(reducers);
   Object.keys(initialState).forEach(item => {
     if (reducerNames.indexOf(item) === -1) {
       reducers[item] = (state = initialState[item]) => state || null;
     }
   });
-  return combineReducers(reducers);
+  return combineReducers<any, StdAction>(reducers);
 };
 
 /**
@@ -43,13 +48,16 @@ const combine = (reducers, initialState) => {
  *   </Provider>
  * );
  */
-function createLazyStore(initialState, enhancers) {
+function createLazyStore(
+  initialState: InitialState,
+  enhancers?: StoreEnhancer
+) {
   const reducer = combine(reducerRegistry.getReducers(), initialState);
   const store = reduxCreateStore(reducer, initialState, enhancers);
 
   // Replace the store's reducer whenever a new reducer is registered.
-  reducerRegistry.setChangeListener(reducers => {
-    store.replaceReducer(combine(reducers, initialState));
+  reducerRegistry.setChangeListener((reducers: ReducersMapObject) => {
+    store.replaceReducer(combine(reducers, initialState) as any);
   });
 
   return store;

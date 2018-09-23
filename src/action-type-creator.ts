@@ -1,3 +1,5 @@
-const actionTypeCreator = reducerName => name => `app/${reducerName}/${name}`;
+function actionTypeCreator(reducerName: string) {
+  return (name: string) => `app/${reducerName}/${name}`;
+}
 
 export default actionTypeCreator;

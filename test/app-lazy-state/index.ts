@@ -1,18 +1,18 @@
-import { h } from "preact";
-import { Provider } from "preact-redux";
+import * as React from "react";
+import { Provider } from "react-redux";
 import { applyMiddleware, compose } from "redux";
-import { createLazyStore } from "../../src/index";
 import thunk from "redux-thunk";
+
+import { createLazyStore } from "../../src/index";
 
 import App from "./app";
 
 import initialState from "./state/initial-state";
-
 import "./state/session";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
   compose;
 
 const store = createLazyStore(
@@ -20,6 +20,7 @@ const store = createLazyStore(
   composeEnhancers(applyMiddleware(thunk))
 );
 
-const AppContainer = () => h(Provider, { store }, h(App));
+const AppContainer = () =>
+  React.createElement(Provider, { store }, React.createElement(App, {}));
 
 export { AppContainer, store };

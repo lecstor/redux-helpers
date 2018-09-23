@@ -8,3 +8,5 @@ import * as selectors from "./selectors";
 const reducer = createLazyReducer("products", fns, initialState);
 
 export { actions, reducer, selectors };
+
+export * from "./types";

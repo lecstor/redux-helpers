@@ -13,11 +13,11 @@ function newStore(state = initialState) {
 
 describe("store", () => {
   test("logIn", () => {
-    const { store, dispatch, getState } = newStore();
+    const { dispatch, getState } = newStore();
     return actions
-      .logIn()(dispatch, getState)
+      .logIn()(dispatch)
       .then(() => {
-        expect(store.getState()).toEqual({
+        expect(getState()).toEqual({
           session: { user: { firstname: "Fred", id: "abc123" } }
         });
       });

@@ -1,4 +1,4 @@
-import { createLazyReducer, createActionTypes } from "../../../../src";
+import { createActionTypes, createLazyReducer } from "../../../../src";
 
 import actions from "./actions";
 import initialState from "./initial-state";

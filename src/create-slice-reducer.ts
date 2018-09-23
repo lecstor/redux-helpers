@@ -1,8 +1,10 @@
-function createSliceReducer(reducerFunctions, initialState) {
-  return function reducer(state = initialState, action) {
-    if (state === null) {
-      return initialState;
-    }
+import { InitialState, ReducersMapObject, StdAction } from "./types";
+
+function createSliceReducer(
+  reducerFunctions: ReducersMapObject,
+  initialState: InitialState
+) {
+  return function reducer(state = initialState, action: StdAction) {
     if (!(action && reducerFunctions[action.type])) {
       return state;
     }

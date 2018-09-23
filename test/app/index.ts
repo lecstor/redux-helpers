@@ -1,8 +1,11 @@
-import { h } from "preact";
-import { Provider } from "preact-redux";
-import { applyMiddleware, compose } from "redux";
+import * as React from "react";
+import { Provider } from "react-redux";
+import { AnyAction, applyMiddleware, compose } from "redux";
+import thunk, { ThunkMiddleware } from "redux-thunk";
+
 import { createStore } from "../../src/index";
-import thunk from "redux-thunk";
+
+import { State } from "./state/types";
 
 import App from "./app";
 
@@ -10,14 +13,15 @@ import { reducer as session } from "./state/session";
 
 const composeEnhancers =
   (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
   compose;
 
 const store = createStore(
   { session },
-  composeEnhancers(applyMiddleware(thunk))
+  composeEnhancers(applyMiddleware(thunk as ThunkMiddleware<State, AnyAction>))
 );
 
-const AppContainer = () => h(Provider, { store }, h(App));
+const AppContainer = () =>
+  React.createElement(Provider, { store }, React.createElement(App, {}));
 
 export default AppContainer;

@@ -2,10 +2,10 @@ import actionTypeCreator from "./action-type-creator";
 import createActionCreators from "./create-action-creators";
 import createActionTypes from "./create-action-types";
 import createLazyReducer from "./create-lazy-reducer";
+import createLazyStore from "./create-lazy-store";
 import createReducer from "./create-reducer";
 import createSliceReducer from "./create-slice-reducer";
 import createStore from "./create-store";
-import createLazyStore from "./create-lazy-store";
 import fnNameToActionName from "./fn-name-to-action-name";
 import reducerRegistry from "./reducer-registry";
 
@@ -21,3 +21,5 @@ export {
   fnNameToActionName,
   reducerRegistry
 };
+
+export * from "./types";

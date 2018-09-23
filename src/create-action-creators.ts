@@ -1,16 +1,20 @@
 import actionTypeCreator from "./action-type-creator";
 
-function createActionCreators(stateSliceName, fns) {
+import { ActionCreators, ReducerFns } from "./types";
+
+function createActionCreators(stateSliceName: string, fns: ReducerFns) {
   const createActionName = actionTypeCreator(stateSliceName);
-  const actions = {};
+  const actions: ActionCreators = {};
   for (const fnName in fns) {
-    const aName = createActionName(fnName);
-    actions[fnName] = payload => {
-      if (payload instanceof Error) {
-        return { type: aName, payload, error: true };
-      }
-      return { type: aName, payload };
-    };
+    if (fns[fnName] instanceof Function) {
+      const aName = createActionName(fnName);
+      actions[fnName] = (payload: any) => {
+        if (payload instanceof Error) {
+          return { type: aName, payload, error: true };
+        }
+        return { type: aName, payload };
+      };
+    }
   }
   return actions;
 }

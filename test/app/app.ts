@@ -1,26 +1,42 @@
-import { h, Component } from "preact";
-import { connect } from "preact-redux";
+import * as React from "react";
+import { connect } from "react-redux";
 
 import { actions, selectors } from "./state/session";
+import { State } from "./state/types";
 
-const mapStateToProps = state => {
-  return { firstname: selectors.getFirstname(state) };
+type OwnProps = {
+  firstname?: string;
 };
-const mapActionsToProps = { logIn: actions.logIn };
 
-class App extends Component {
+type StateProps = {
+  firstname?: string;
+};
+
+type DispatchProps = {
+  logIn: () => {};
+};
+
+type Props = OwnProps & StateProps & DispatchProps;
+
+const mapStateToProps = (state: State, ownProps: OwnProps) => {
+  return { firstname: selectors.getFirstname(state) || ownProps.firstname };
+};
+const mapDispatchToProps = { logIn: actions.logIn };
+
+class App extends React.Component<Props> {
   componentDidMount() {
     this.props.logIn();
   }
 
-  render({ firstname }) {
-    return h("div", null, `Hello ${firstname || ""}`);
+  render() {
+    const { firstname } = this.props;
+    return React.createElement("div", null, `Hello ${firstname || ""}`);
   }
 }
 
 const connected = connect(
   mapStateToProps,
-  mapActionsToProps
+  mapDispatchToProps
 );
 
 export default connected(App);

@@ -1,20 +1,36 @@
-import { h, Component } from "preact";
-import { connect } from "preact-redux";
+import * as React from "react";
+import { connect } from "react-redux";
 
-import { actions, selectors } from "./state/products";
+import { actions, Product, selectors, SliceState } from "./state/products";
+import { AppState } from "./state/types";
 
-const mapStateToProps = state => {
-  return { product: selectors.getProduct(state, "1") };
+type StateProps = {
+  product?: Product;
+};
+
+type DispatchProps = {
+  setProduct: (opts: Product) => {};
+};
+
+type Props = StateProps & DispatchProps;
+
+const mapStateToProps = (state: AppState) => {
+  return { product: selectors.getProduct(state.products, "1") };
 };
 const mapActionsToProps = { setProduct: actions.setProduct };
 
-class UseLazySlice extends Component {
+class UseLazySlice extends React.Component<Props> {
   componentDidMount() {
     this.props.setProduct({ id: "1", name: "Product One" });
   }
 
-  render({ product = {} }) {
-    return h("div", { id: "child2" }, `Product: ${product.name || ""}`);
+  render() {
+    const { product } = this.props;
+    return React.createElement(
+      "div",
+      { id: "child2" },
+      `Product: ${(product && product.name) || ""}`
+    );
   }
 }
 

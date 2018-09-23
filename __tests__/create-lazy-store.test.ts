@@ -22,7 +22,7 @@ describe("store", () => {
   test("logIn", () => {
     const { dispatch, getState } = newStore();
     return actions
-      .logIn()(dispatch, getState)
+      .logIn()(dispatch)
       .then(() => {
         expect(getState()).toEqual({
           session: { user: { firstname: "Fred", id: "abc123" } }

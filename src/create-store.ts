@@ -1,4 +1,10 @@
-import { combineReducers, createStore as reduxCreateStore } from "redux";
+import {
+  combineReducers,
+  createStore as reduxCreateStore,
+  Store,
+  StoreEnhancer
+} from "redux";
+import { ReducersMapObject, State, StdAction } from "./types";
 
 /**
  * returns a store
@@ -36,9 +42,15 @@ import { combineReducers, createStore as reduxCreateStore } from "redux";
  *   </Provider>
  * );
  */
-function createStore(reducers, state, enhancers) {
-  const reducer = combineReducers(reducers, state);
-  const store = reduxCreateStore(reducer, state, enhancers);
+function createStore(
+  reducers: ReducersMapObject,
+  state: State,
+  enhancers?: StoreEnhancer
+) {
+  const reducer = combineReducers<any, StdAction>(reducers);
+  // const reducer = combineReducers(reducers);
+  // const store: Store<any, StdAction> = reduxCreateStore(reducer, state, enhancers);
+  const store: Store = reduxCreateStore(reducer, state, enhancers);
   return store;
 }
 

@@ -1,9 +1,11 @@
 import actionTypeCreator from "./action-type-creator";
 import fnNameToActionName from "./fn-name-to-action-name";
 
-function createActionTypes(name, fns) {
+import { ActionTypes, ReducerFns } from "./types";
+
+function createActionTypes(name: string, fns: ReducerFns) {
   const createActionType = actionTypeCreator(name);
-  const actionTypes = {};
+  const actionTypes: ActionTypes = {};
   for (const fnName in fns) {
     if (fns[fnName] instanceof Function) {
       const actionType = createActionType(fnName); // "app/session/setUser"

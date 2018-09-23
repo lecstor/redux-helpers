@@ -1,5 +1,10 @@
-function getFirstname(state) {
-  return (state.session.user || {}).firstname;
+import { AppState } from "../types";
+
+function getFirstname(state: AppState) {
+  if (!state.session.user) {
+    return;
+  }
+  return state.session.user.firstname;
 }
 
 export { getFirstname };

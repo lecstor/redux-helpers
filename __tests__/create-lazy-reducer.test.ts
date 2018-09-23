@@ -1,13 +1,6 @@
 import createLazyReducer from "../src/create-lazy-reducer";
 
-const reducerFns = {
-  setUser(state, { payload: user }) {
-    return {
-      ...state,
-      user
-    };
-  }
-};
+import * as reducerFns from "../test/app/state/session/reducer";
 
 describe("createLazyReducer", () => {
   test("create reducer", () => {

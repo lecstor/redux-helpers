@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "target": "es5",
+    "lib": ["es2017", "dom"],
     "module": "commonjs",
     "declaration": true,
     "outDir": "./lib",
     "strict": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": ["src", "test"],
+  "exclude": ["node_modules"]
 }
