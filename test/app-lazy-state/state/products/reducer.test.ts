@@ -5,10 +5,16 @@ describe("reducer", () => {
     expect(
       setProduct(
         { collection: {} },
-        { payload: { id: "abc123", name: "Widget" } }
+        { type: "setProduct", payload: { id: "abc123", name: "Widget" } }
       )
     ).toEqual({
       collection: { abc123: { id: "abc123", name: "Widget" } }
+    });
+  });
+
+  test("setProduct - no payload", () => {
+    expect(setProduct({ collection: {} }, { type: "setProduct" })).toEqual({
+      collection: {}
     });
   });
 });

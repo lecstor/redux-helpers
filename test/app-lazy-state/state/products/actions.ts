@@ -1,5 +1,8 @@
-import { createActionCreators } from "../../../../src";
+import { createActionCreator } from "../../../../src";
 
-import * as fns from "./reducer";
+import { Product } from "./types";
 
-export default createActionCreators("products", fns);
+// uses default actionTypeCreator
+const createAction = createActionCreator("products");
+
+export const setProduct = createAction<Product>("setProduct");

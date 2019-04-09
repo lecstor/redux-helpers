@@ -1,8 +1,8 @@
-export type User = {
+export interface User {
   id: string;
   firstname: string;
-};
+}
 
-export type SliceState = {
+export interface SliceState {
   user?: User;
-};
+}

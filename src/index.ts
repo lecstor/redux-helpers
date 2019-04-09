@@ -1,24 +1,20 @@
-import actionTypeCreator from "./action-type-creator";
-import createActionCreators from "./create-action-creators";
-import createActionTypes from "./create-action-types";
+import createActionType from "./create-action-type";
 import createLazyReducer from "./create-lazy-reducer";
 import createLazyStore from "./create-lazy-store";
 import createReducer from "./create-reducer";
 import createSliceReducer from "./create-slice-reducer";
 import createStore from "./create-store";
-import fnNameToActionName from "./fn-name-to-action-name";
 import reducerRegistry from "./reducer-registry";
+import createActionCreator from "./create-action-creator";
 
 export {
-  actionTypeCreator,
-  createActionCreators,
-  createActionTypes,
+  createActionType as actionTypeCreator,
   createLazyReducer,
   createReducer,
   createSliceReducer,
   createLazyStore,
   createStore,
-  fnNameToActionName,
+  createActionCreator,
   reducerRegistry
 };
 

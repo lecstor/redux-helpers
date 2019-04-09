@@ -1,6 +1,6 @@
-import { State } from "../types";
+import { AppState } from "../types";
 
-function getFirstname(state: State) {
+function getFirstname(state: AppState) {
   if (!state.session.user) {
     return;
   }

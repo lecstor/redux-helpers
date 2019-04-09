@@ -1,8 +1,8 @@
-export type Product = {
+export interface Product {
   id: string;
   name: string;
-};
+}
 
-export type SliceState = {
+export interface SliceState {
   collection: Record<string, Product>;
-};
+}

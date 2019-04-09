@@ -1,6 +1,9 @@
-import { SliceState } from "./types";
+import { SliceState, User } from "./types";
+import { Action } from "../../../../src/types";
 
-function setUser(state: SliceState, { payload: user }: { payload: any }) {
+export type SetUser = Action<User>;
+
+function setUser(state: SliceState, { payload: user }: SetUser): SliceState {
   return {
     ...state,
     user

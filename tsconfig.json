@@ -1,13 +1,21 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "target": "es5",
-    "lib": ["es2017", "dom"],
-    "module": "ES2015",
     "declaration": true,
-    "strict": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    // "module": "ES2015",
     "moduleResolution": "node",
-    "esModuleInterop": true
+    "noEmit": true,
+    "strict": true,
+    "target": "es5",
+    "jsx": "preserve",
   },
-  "include": ["src", "test"]
+  "include": [
+    "src",
+    "test"
+  ]
 }

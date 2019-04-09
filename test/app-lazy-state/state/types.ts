@@ -1,7 +1,7 @@
 import { SliceState as ProductsSlice } from "./products/types";
 import { SliceState as SessionSlice } from "./session/types";
 
-export type AppState = {
+export interface AppState {
   products: ProductsSlice;
   session: SessionSlice;
-};
+}

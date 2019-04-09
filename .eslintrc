@@ -1,49 +1,53 @@
 {
-  "parser": "babel-eslint",
-  "env": {
-    "browser": true,
-    "node": true,
-    "jest": true,
-    "es6": true,
-    "jest/globals": true
-  },
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
+    "plugin:lodash-template/base",
     "plugin:react/recommended",
-    "prettier",
-    "prettier/react"
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
   ],
-  "plugins": ["react", "jest", "prettier"],
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "modules": true,
-      "jsx": true
-    }
-  },
   "settings": {
     "react": {
-      "pragma": "h"
+      "version": "detect"
     }
   },
+  "env": {
+    "browser": true,
+    "es6": true,
+    "jest": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "modules": true,
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "lodash-template",
+    "react",
+    "jest",
+    "jsx-a11y",
+    "import",
+    "react-hooks",
+    "prettier"
+  ],
   "rules": {
-    "curly": ["error", "all"],
-    "brace-style": ["error", "1tbs"],
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
     "prettier/prettier": "error",
-    "semi": [
+    "react-hooks/rules-of-hooks": "error",
+    "no-unused-vars": [
       "error",
-      "always",
       {
-        "omitLastInOneLineBlock": true
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "^_"
       }
-    ],
-    "react/prop-types": 0,
-    "react/no-unknown-property": [
-      2,
-      {
-        "ignore": ["class"]
-      }
-    ],
-    "react/no-deprecated": 0
+    ]
   }
 }

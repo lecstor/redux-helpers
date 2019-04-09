@@ -5,17 +5,18 @@ import {
 } from "redux";
 
 import reducerRegistry from "./reducer-registry";
-import { InitialState, ReducersMapObject, StdAction } from "./types";
+import { Reducers } from "./types";
 
 // Preserve initial state for not-yet-loaded reducers
-const combine = (reducers: ReducersMapObject, initialState: InitialState) => {
+const combine = <State>(reducers: Reducers, initialState: State) => {
   const reducerNames = Object.keys(reducers);
   Object.keys(initialState).forEach(item => {
     if (reducerNames.indexOf(item) === -1) {
-      reducers[item] = (state = initialState[item]) => state || null;
+      reducers[item] = (state = initialState[item as keyof State]) =>
+        state || null;
     }
   });
-  return combineReducers<any, StdAction>(reducers);
+  return combineReducers(reducers);
 };
 
 /**
@@ -25,21 +26,21 @@ const combine = (reducers: ReducersMapObject, initialState: InitialState) => {
  * @param {Object} enhancers
  *
  * @example
- * import { applyMiddleware, compose } from "redux";
- * import { Provider } from "preact-redux";
- * import { createStore } from "@lecstor/redux-helpers"
+ * import * as React from "react";
+ * import { Provider } from "react-redux";
+ * import { applyMiddleware } from "redux";
+ * import { composeWithDevTools } from "redux-devtools-extension";
+ *
+ * import { createLazyStore } from "@lecstor/redux-helpers"
  * import thunk from "redux-thunk";
  *
+ * import App from "./app";
+ * import initialState from "./state/initial-state";
  * import "./state/session";
  *
- * const composeEnhancers =
- *   (typeof window !== "undefined" &&
- *     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
- *   compose;
- *
- * const store = createStore(
- *   { session: {} },
- *   composeEnhancers(applyMiddleware(thunk))
+ * const store = createLazyStore(
+ *   initialState,
+ *   composeWithDevTools(applyMiddleware(thunk))
  * );
  *
  * export default () => (
@@ -48,16 +49,16 @@ const combine = (reducers: ReducersMapObject, initialState: InitialState) => {
  *   </Provider>
  * );
  */
-function createLazyStore(
-  initialState: InitialState,
+function createLazyStore<State>(
+  initialState: State,
   enhancers?: StoreEnhancer
 ) {
-  const reducer = combine(reducerRegistry.getReducers(), initialState);
+  const reducer = combine<State>(reducerRegistry.getReducers(), initialState);
   const store = reduxCreateStore(reducer, initialState, enhancers);
 
   // Replace the store's reducer whenever a new reducer is registered.
-  reducerRegistry.setChangeListener((reducers: ReducersMapObject) => {
-    store.replaceReducer(combine(reducers, initialState) as any);
+  reducerRegistry.setChangeListener(reducers => {
+    store.replaceReducer(combine(reducers, initialState));
   });
 
   return store;

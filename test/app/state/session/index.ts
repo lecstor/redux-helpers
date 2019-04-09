@@ -1,13 +1,19 @@
 import { createReducer } from "../../../../src";
+import { actionTypeCreator } from "../index";
 
-import actions from "./actions";
+import * as actions from "./actions";
 import * as fns from "./reducer";
 import * as selectors from "./selectors";
 
-const initialState = {
-  user: null
-};
+import { SliceState } from "./types";
 
-const reducer = createReducer("session", fns, initialState);
+const initialState = {};
+
+const reducer = createReducer<SliceState>(
+  "session",
+  fns,
+  initialState,
+  actionTypeCreator
+);
 
 export { actions, reducer, selectors };

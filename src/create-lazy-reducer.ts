@@ -1,14 +1,14 @@
+import { Reducers } from "./types";
+
 import createReducer from "./create-reducer";
 import reducerRegistry from "./reducer-registry";
 
-import { InitialState, ReducerFns } from "./types";
-
-function createLazyReducer(
+function createLazyReducer<State>(
   name: string,
-  fns: ReducerFns,
-  initialState: InitialState
+  fns: Reducers,
+  initialState: State
 ) {
-  const reducer = createReducer(name, fns, initialState);
+  const reducer = createReducer<State>(name, fns, initialState);
   reducerRegistry.register(name, reducer);
   return reducer;
 }

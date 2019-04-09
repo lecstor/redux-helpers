@@ -23,7 +23,27 @@ need.
 
 ## Regular Redux Store
 
-### app/state/session/reducer.js
+### app/state/index.ts
+
+```ts
+import { createActionCreator } from "../../../src";
+
+type ActionType = string;
+type ReducerFnName = string;
+type Slice = string;
+
+// customise action types
+const actionTypeCreator = (slice: Slice) => (
+  action: ReducerFnName
+): ActionType => `${slice}/${action}`;
+
+const createAction = (slice: Slice) =>
+  createActionCreator(actionTypeCreator(slice));
+
+export { actionTypeCreator, createAction };
+```
+
+### app/state/session/reducer.ts
 
 Write reducer functions as plain functions and export them.
 
@@ -33,34 +53,41 @@ Actions are FSA compatible in that they have a `type` and `payload`. (and
 An action creator will be generated for each reducer function.
 
 ```
-function setUser(state, { payload: user }) {
-  return { ...state, user };
+import { SliceState, User } from "./types";
+import { Action } from "@lecstor/redux-helpers";
+
+export type SetUser = Action<User>;
+
+function setUser(state: SliceState, { payload: user }: SetUser): SliceState {
+  return {
+    ...state,
+    user
+  };
 }
 
 export { setUser };
 ```
 
-### app/state/session/actions.js
+### app/state/session/actions.ts
 
 Create default action creators automatically then add more complex ones manually.
 
 ```
-import { createActionCreators } from "@lecstor/redux-helpers";
+import { Dispatch } from "redux";
 
-import * as fns from "./reducer";
+import { createAction } from "../index";
 
-const actions = createActionCreators("session", fns);
+const action = createAction("session");
 
-actions.logIn = () => dispatch => {
-  return Promise.resolve({ id: "abc123", firstname: "Fred" }).then(user =>
-    dispatch(actions.setUser(user))
+export const setUser = action<User>("setUser");
+
+export const logIn = () => (dispatch: Dispatch) =>
+  Promise.resolve({ id: "abc123", firstname: "Fred" }).then(user =>
+    dispatch(setUser(user))
   );
-};
-
-export default actions;
 ```
 
-### app/state/session/selectors.js
+### app/state/session/selectors.ts
 
 Write selectors however you please.
 
@@ -79,75 +106,108 @@ Export all the things.
 
 ```
 import { createReducer } from "@lecstor/redux-helpers";
+import { actionTypeCreator } from "../index";
 
-import actions from "./actions";
+import * as actions from "./actions";
 import * as fns from "./reducer";
 import * as selectors from "./selectors";
 
-const initialState = {
-  user: null
-};
+import { SliceState } from "./types";
 
-const reducer = createReducer("session", fns, initialState);
-const actionTypes = createActionTypes("session", fns);
+const initialState = {};
 
-export { actions, actionTypes, reducer, selectors };
+const reducer = createReducer<SliceState>(
+  "session",
+  fns,
+  initialState,
+  actionTypeCreator
+);
+
+export { actions, reducer, selectors };
 ```
 
 ### app/index.js
 
 ```
-import { h } from "preact";
-import { Provider } from "preact-redux";
-import { applyMiddleware, compose } from "redux";
-import { createStore } from "@lecstor/redux-helpers";
+import * as React from "react";
+import { Provider } from "react-redux";
+import { applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
+
+import { createStore } from "@lecstor/redux-helpers";
+import { AppState } from "./state/types";
 
 import App from "./app";
 
 import { reducer as session } from "./state/session";
 
-const composeEnhancers =
-  (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
-
-const store = createStore(
+const store = createStore<AppState>(
   { session },
-  composeEnhancers(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
-const AppContainer = () => h(Provider, { store }, h(App));
+const AppContainer = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
 
 export default AppContainer;
+
 ```
 
 ### app/app.js
 
 ```
-import { h, Component } from "preact";
-import { connect } from "preact-redux";
+import * as React from "react";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 import { actions, selectors } from "./state/session";
+import { AppState, Dispatch } from "./state/types";
 
-const mapStateToProps = state => {
-  return { firstname: selectors.getFirstname(state) };
-};
-const mapActionsToProps = { logIn: actions.logIn };
+interface OwnProps {
+  firstname?: string;
+}
 
-class App extends Component {
-  componentDidMount() {
-    this.props.logIn();
-  }
+interface StateProps {
+  firstname?: string;
+}
 
-  render({ firstname }) {
-    return h("div", null, `Hello ${firstname || ""}`);
-  }
+// relies on currently unpublished version of redux-thunk
+// https://github.com/reduxjs/redux-thunk/pull/224
+// https://github.com/reduxjs/redux-thunk/commit/4bfa41ceb4281131ccbe9eeda87c07aeaf63b014
+// https://github.com/reduxjs/redux-thunk/issues/213
+const mapDispatchToProps = (dispatch: Dispatch) =>
+  bindActionCreators({ logIn: actions.logIn }, dispatch);
+
+// with a previous redux-thunk..
+// const mapDispatchToProps = (dispatch: Dispatch) => ({
+//   logIn: () => actions.logIn()(dispatch),
+//   setUser: user => dispatch(actions.setUser(user))
+// });
+
+type DispatchProps = ReturnType<typeof mapDispatchToProps>;
+
+type Props = OwnProps & StateProps & DispatchProps;
+
+function mapStateToProps(state: AppState, ownProps: OwnProps) {
+  return { firstname: selectors.getFirstname(state) || ownProps.firstname };
+}
+
+function App({ firstname, logIn }: Props) {
+  return (
+    <div>
+      <div>Hello {firstname || ""}</div>
+      <button onClick={() => logIn()}>Log In</button>
+    </div>
+  );
 }
 
 const connected = connect(
   mapStateToProps,
-  mapActionsToProps
+  mapDispatchToProps
 );
 
 export default connected(App);
@@ -174,7 +234,7 @@ export default {
 The only change is to import the initial state rather than declaring it here.
 
 ```
-import { createLazyReducer, createActionTypes } from "@lecstor/redux-helpers";
+import { createLazyReducer } from "@lecstor/redux-helpers";
 
 import actions from "./actions";
 import initialState from "./initial-state";
@@ -182,9 +242,8 @@ import * as fns from "./reducer";
 import * as selectors from "./selectors";
 
 const reducer = createLazyReducer("session", fns, initialState);
-const actionTypes = createActionTypes("session", fns);
 
-export { actions, actionTypes, reducer, selectors };
+export { actions, reducer, selectors };
 ```
 
 ### app-lazy/state/initial-state.js
@@ -206,75 +265,93 @@ Import any slices we want loaded by default, they'll self-register with the
 reducer-registry.
 
 ```
-import { h } from "preact";
-import { Provider } from "preact-redux";
-import { applyMiddleware, compose } from "redux";
-import { createLazyStore } from "@lecstor/redux-helpers";
+import * as React from "react";
+import { Provider } from "react-redux";
+import { applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
+
+import { createLazyStore } from "@lecstor/redux-helpers";
 import App from "./app";
 
 import initialState from "./state/initial-state";
 
 import "./state/session";
 
-const composeEnhancers =
-  (typeof window !== "undefined" &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
-  compose;
-
 const store = createLazyStore(
   initialState,
-  composeEnhancers(applyMiddleware(thunk))
+  composeWithDevTools(applyMiddleware(thunk))
 );
 
-const AppContainer = () => h(Provider, { store }, h(App));
+const AppContainer = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
 
-export { AppContainer, store };
+export default AppContainer;
 ```
 
 ## API
 
-### createActionCreators(sliceName: string, reducerFunctions: Object)
+### createActionCreator(slice: string | Function)
 
-**sliceName:** the key for the store property for this store slice
+**slice**
+- string: the key for the store property for this store slice
+- function: takes a reducer name and returns an action type
 
-**reducerFunctions**: the functions that make up the reducer for this store slice
-
-**returns:** an Object of action creators
+**returns:**
+```ts
+function createAction<Payload>(reducerFnName: string)
+```
 
 eg
 
 ```
-const fns = {
-  setUser(state, { payload }) {
-    return { ...state, user: payload };
-  }
-};
+const createAction = createActionCreator("session");
 
-createActionCreators("session", fns);
+const setUser = createAction<User>("setUser")
 ```
 
-returns:
+equivalent to:
 
 ```
-{
-  setUser(user) {
-    const type = "app/session/setUser";
-    if (payload instanceof Error) {
-      return { type, payload, error: true };
-    }
-    return { type, payload };
+const setUser = payload => {
+  const type = "app/session/setUser";
+  if (payload instanceof Error) {
+    return { type, payload, error: true };
   }
+  return { type, payload };
 }
 ```
 
-### createReducer(sliceName: string, reducerFunctions: Object, initialState: Object)
+```
+const createAction = createActionCreator(reducer => `my/session/${reducer}`);
+
+const setUser = createAction<User>("setUser")
+```
+
+equivalent to:
+
+```
+const setUser = payload => {
+  const type = "my/session/setUser";
+  if (payload instanceof Error) {
+    return { type, payload, error: true };
+  }
+  return { type, payload };
+}
+```
+
+### createReducer(sliceName: string, reducerFunctions: Object, initialState: Object, actionTypeCreator?: Function)
 
 **sliceName:** the key for the store property for this slice
 
 **reducerFunctions**: the functions that make up the reducer for this slice
 
 **initialState**: the initial state for this store slice
+
+**actionTypeCreator?**: custom function to use to generate action types
 
 **returns:** a reducer function
 
@@ -291,14 +368,20 @@ const initialState = {
   user: null
 }
 
-createReducer("session", fns, initialState);
+createReducer(
+  "session",
+  fns,
+  initialState,
+  (slice: string) => (action: string): ActionType =>
+    `my/${slice}/${action}`
+);
 ```
 
 returns:
 
 ```
 const reducerObj = {
-  "app/session/setUser": function(state, { payload }) {
+  "my/session/setUser": function(state, { payload }) {
     return { ...state, user: payload };
   }
 }
@@ -312,34 +395,4 @@ return function reducer(state = initialState, action) {
   }
   return reducerObj[action.type](state, action);
 };
-```
-
-### createActionTypes(sliceName: string, reducerFunctions: Object)
-
-**sliceName:** the key for the store property for this store slice
-
-**reducerFunctions**: the functions that make up the reducer for this store slice
-
-**returns:** an Object of action creator types where the keys are
-the function names converted to upper-snake-cased and the values are the full
-action type strings.
-
-eg
-
-```
-const fns = {
-  setUser(state, { payload }) {
-    return { ...state, user: payload };
-  }
-};
-
-createActionTypes("session", fns);
-```
-
-returns:
-
-```
-{
-  SET_USER: "app/session/setUser"
-}
 ```

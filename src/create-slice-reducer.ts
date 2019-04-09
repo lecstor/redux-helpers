@@ -1,10 +1,12 @@
-import { InitialState, ReducersMapObject, StdAction } from "./types";
+import { Action } from "redux";
 
-function createSliceReducer(
-  reducerFunctions: ReducersMapObject,
-  initialState: InitialState
+import { Reducers } from "./types";
+
+function createSliceReducer<State>(
+  reducerFunctions: Reducers,
+  initialState: State
 ) {
-  return function reducer(state = initialState, action: StdAction) {
+  return function reducer(state: State = initialState, action: Action) {
     if (!(action && reducerFunctions[action.type])) {
       return state;
     }

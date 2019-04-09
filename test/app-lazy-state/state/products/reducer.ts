@@ -1,9 +1,12 @@
+import { Action } from "../../../../src/types";
 import { Product, SliceState } from "./types";
 
-function setProduct(
-  state: SliceState,
-  { payload: product }: { payload: Product }
-) {
+export type SetProduct = Action<Product>;
+
+function setProduct(state: SliceState, { payload: product }: SetProduct) {
+  if (!product) {
+    return state;
+  }
   return {
     ...state,
     collection: {

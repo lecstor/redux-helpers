@@ -1,15 +1,16 @@
 import { Dispatch } from "redux";
 
-import { createActionCreators } from "../../../../src";
+import { createActionCreator } from "../../../../src";
 
-import * as fns from "./reducer";
+import { User } from "./types";
 
-const actions = createActionCreators("session", fns);
+// uses default actionTypeCreator
+const createAction = createActionCreator("session");
 
-actions.logIn = () => (dispatch: Dispatch) => {
-  return Promise.resolve({ id: "abc123", firstname: "Fred" }).then(user =>
-    dispatch(actions.setUser(user))
+export const setUser = createAction<User>("setUser");
+
+export const logIn = () => (dispatch: Dispatch) => {
+  return Promise.resolve({ id: "abc123", firstname: "Fred" }).then(
+    (user: User) => dispatch(setUser(user))
   );
 };
-
-export default actions;

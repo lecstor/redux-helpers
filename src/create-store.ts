@@ -1,57 +1,57 @@
 import {
   combineReducers,
   createStore as reduxCreateStore,
+  ReducersMapObject,
   Store,
   StoreEnhancer
 } from "redux";
-import { ReducersMapObject, State, StdAction } from "./types";
 
 /**
  * returns a store
- *
- * @param {Object} reducers
- * @param {Object} state initial state containing at least the top-level state slices
- * @param {Object} enhancers
- *
- * @example
- * import { applyMiddleware, compose } from "redux";
- * import { Provider } from "preact-redux";
- * import { createStore } from "@lecstor/redux-helpers"
- * import thunk from "redux-thunk";
- *
- * import { reducer as session } from "./state/session";
- * import { reducer as other } from "./state/other";
- *
- * const reducers = { session, other };
- * const initialState = { session: {}, other: {} };
- *
- * const composeEnhancers =
- *   (typeof window !== "undefined" &&
- *     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) ||
- *   compose;
- *
- * const store = createStore(
- *   reducers,
- *   initialState,
- *   composeEnhancers(applyMiddleware(thunk))
- * );
- *
- * export default () => (
- *   <Provider store={store}>
- *     <App />
- *   </Provider>
- * );
+
+```ts
+import * as React from "react";
+import { Provider } from "react-redux";
+import { applyMiddleware } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import thunk from "redux-thunk";
+import { createStore } from "@lecstor/redux-helpers"
+
+import { reducer as session } from "./state/session";
+import { reducer as other } from "./state/other";
+
+const reducers = { session, other };
+const initialState = { session: {}, other: {} };
+
+const store = createStore(
+  reducers,
+  initialState, // optional
+  composeWithDevTools(applyMiddleware(thunk)) // optional
+);
+
+export default () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+```
  */
-function createStore(
+function createStore<AppState>(
   reducers: ReducersMapObject,
-  state: State,
+  state: AppState,
+  enhancers?: StoreEnhancer
+): Store;
+function createStore<AppState>(
+  reducers: ReducersMapObject,
+  enhancers?: StoreEnhancer
+): Store;
+
+function createStore<AppState>(
+  reducers: ReducersMapObject,
+  state: AppState,
   enhancers?: StoreEnhancer
 ) {
-  const reducer = combineReducers<any, StdAction>(reducers);
-  // const reducer = combineReducers(reducers);
-  // const store: Store<any, StdAction> = reduxCreateStore(reducer, state, enhancers);
-  const store: Store = reduxCreateStore(reducer, state, enhancers);
-  return store;
+  return reduxCreateStore(combineReducers(reducers), state, enhancers);
 }
 
 export default createStore;
