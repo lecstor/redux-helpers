@@ -1,6 +1,6 @@
 {
   "name": "@lecstor/redux-helpers",
-  "version": "3.0.0",
+  "version": "5.0.0",
   "description": "Redux boilerplate reduction and lazy loading of store slices",
   "author": "Jason Galea <jason@lecstor.com> (http://lecstor.com)",
   "license": "MIT",
